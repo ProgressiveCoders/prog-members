@@ -39,10 +39,12 @@ Heroku:
 
     git clone git@github.com:ProgressiveCoders/prog-members.git
     heroku create
+    git push heroku master
     heroku ps:scale web=1
     heroku addons:create scheduler:standard
 
-Next configure the scheduler addon to run the following task as often as you like:
+
+Next run `heroku addons:open scheduler` to configure the scheduler addon to run the following task as often as you like:
 
     rake prog:members:sync
 
@@ -52,10 +54,6 @@ And set environment variables:
                       AIRTABLE_KEY=keyTherealone        \
                       AIRTABLE_APP=appSomeRealOne       \
                       AIRTABLE_BASE="Real Table Name"   \
-
-Finally,
-
-    git push heroku master # might need to use --force
 
 ## Contributing
 
