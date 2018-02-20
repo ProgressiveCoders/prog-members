@@ -21,6 +21,14 @@ module Prog
       end
 
       private
+        def parse_handle(member)
+          display_name = member.profile.display_name
+          if display_name == ""
+            member.name
+          else
+            display_name
+          end
+        end
 
         def syncopate
           @slack_client.users_list.members.each do |member|
@@ -30,7 +38,7 @@ module Prog
             when 0
               # create new record
               new_member = @table.new({
-                "Member Handle"  => member.name,
+                "Member Handle"  => parse_handle(member),
                 "Member Name"    => member.real_name,
                 "TZ"             => member.tz,
                 "TZ Label"       => member.tz_label,
@@ -44,7 +52,7 @@ module Prog
               # update existing record
 
               existing_member = @table.find(matches[0].id)
-              existing_member["Member Handle"] = member.name
+              existing_member["Member Handle"] = parse_handle(member)
               existing_member["Member Name"]   = member.real_name
               existing_member["TZ"]            = member.tz
               existing_member["TZ Label"]      = member.tz_label

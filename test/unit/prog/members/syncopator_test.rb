@@ -39,7 +39,7 @@ describe Prog::Members::Syncopator do
       @airtable_match.expect(:id, "rec123")
       @params[:table].expect(:find, @existing_record = MiniTest::Mock.new, ["rec123"])
 
-      @slack_users_list_item.expect(:name, "ProgressiveCoder")
+      @slack_users_list_item.expect(:profile, MiniTest::Mock.new.expect(:display_name, "ProgressiveCoder"))
       @existing_record.expect(:[]=, "ProgressiveCoder", ["Member Handle", "ProgressiveCoder"])
 
       @slack_users_list_item.expect(:real_name, "Progressive Coder")
@@ -70,7 +70,7 @@ describe Prog::Members::Syncopator do
     it "executes successfully when creating" do
       @params[:table].expect(:all, [], [{filter: '{slack_id} = "abc123"'}])
 
-      @slack_users_list_item.expect(:name, "ProgressiveCoder")
+      @slack_users_list_item.expect(:profile, MiniTest::Mock.new.expect(:display_name, "ProgressiveCoder"))
       @slack_users_list_item.expect(:real_name, "Progressive Coder")
       @slack_users_list_item.expect(:tz, "America/Chicago")
       @slack_users_list_item.expect(:tz_label, "Central Daylight Time")
